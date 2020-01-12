@@ -1,0 +1,57 @@
+version: '3'
+
+services:
+  nginx:
+    container_name: tasks-nginx
+    build:
+      context: docker/nginx
+    ports:
+      - 81:80
+      - 445:443
+    volumes:
+      - ./html/tasks/:/var/www/tasks/
+      - ./logs/:/var/log/nginx/
+    links:
+      - tasks-php
+    env_file:
+      - "./.env"
+
+  # Сервис коллцентра
+  tasks-php:
+    container_name: tasks
+    build:
+      context: docker/php-fpm
+    env_file:
+      - "./.env"
+    depends_on:
+      - mysql-tasks
+    links:
+      - mysql-tasks
+    volumes:
+      - ./html/tasks/:/var/www/tasks/
+    healthcheck:
+      test: test -e /tmp/stand.ready && exit 0 || exit 1
+      # start-period: 30s
+      interval: 10s
+      timeout: 5s
+      retries: 300
+
+  # База модуля коллцентра
+  mysql-tasks:
+    container_name: mysql-tasks
+    build:
+      context: docker/mysql
+    ports:
+      - 3308:3306
+    env_file:
+      - "./.env"
+    volumes:
+      - ./docker/mysql/data:/var/lib/mysql
+    healthcheck:
+      test: test `mysql -e 'SHOW DATABASES' | grep -x -c 'migrations\\'` = 2 && exit 0 || exit 1
+      # start-period: 30s
+      interval: 10s
+      timeout: 5s
+      retries: 60
+    networks:
+      - default
