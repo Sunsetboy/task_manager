@@ -38,4 +38,27 @@ class TaskTest extends TestCase
         ])
             ->seeStatusCode(400);
     }
+
+    /**
+     * @test
+     */
+    public function get_an_existing_task()
+    {
+        $user = factory('App\User')->create();
+        $task = factory('App\Task')->create(['user_id' => $user->id]);
+
+        $this->json('GET', '/task/' . $task->id)
+            ->seeJson([
+                'title' => $task->title,
+            ]);
+    }
+
+    /**
+     * @test
+     */
+    public function get_a_non_existing_task()
+    {
+        $this->json('GET', '/task/100023')
+            ->seeStatusCode(404);
+    }
 }

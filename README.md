@@ -20,6 +20,7 @@ During the first run install dependencies and migrations
 ```
 composer install
 php artisan migrate
+php artisan db:seed
 ```
 
 ## Stopping the application
