@@ -14,3 +14,18 @@
 $router->get('/', function () use ($router) {
     return $router->app->version();
 });
+
+// list of user's tasks
+$router->get('/task/user/{id}', 'TaskController@getForUser');
+
+// get one task by id
+$router->get('/task/{id}', 'TaskController@get');
+
+// create a task
+$router->put('/task', 'TaskController@store');
+
+// update a task
+$router->post('/task/{id}', 'TaskController@update');
+
+// delete a task
+$router->delete('/task/{id}', 'TaskController@delete');
