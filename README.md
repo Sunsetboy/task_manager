@@ -22,33 +22,12 @@ composer install
 php artisan migrate
 ```
 
-## Остановка стенда
+## Stopping the application
 ```docker-compose down```
 
-## Тестовый режим
-В тестовом режиме в очередь обзвона отправляются не реальные данные клиентов, а тестовые (мои и Никиты). Включение/выключение тестового режима  осуществляется через файл html/callcenter/.env
-```
-EXPORT_TEST_PHONES=true
-```
+## Tests execution
+All tests should be executed inside the tasks container
 
-## Запуск тестов
-Зайти в контейнер callcenter
-
-Запуск тестов
 ```
 vendor/bin/phpunit
-```
-Запуск тестов с отчетом по покрытию
-```
-vendor/bin/phpunit --coverage-html tests/output/coverage/ --coverage-text
-```
-Отчет по покрытию будет сгенерирован в папке tests/output/coverage
-
-## Gitlab CI
-При пуше в репозиторий Gitlab автоматически запускаются тесты. Если вы внесли изменения в файлы, относящиеся к Докеру, например, в образы, необходимо пересобрать и запушить изменения в Докер репозиторий.
-
-Для этого перейдите в папку docker/php-fpm и выполните команды:
-```
-docker build -t hub.4slovo.ru/4slovo.ru/callcenter .
-docker push hub.4slovo.ru/4slovo.ru/callcenter
 ```

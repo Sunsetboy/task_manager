@@ -16,7 +16,7 @@ $router->get('/', function () use ($router) {
 });
 
 // list of user's tasks
-$router->get('/task/user/{id}', 'TaskController@getForUser');
+$router->get('/task/user/{id}', 'TaskController@getListForUser');
 
 // get one task by id
 $router->get('/task/{id}', 'TaskController@get');
