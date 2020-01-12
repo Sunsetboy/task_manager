@@ -15,7 +15,13 @@ class CreateTaskTable extends Migration
     {
         Schema::create('task', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->timestamps();
+            $table->string('title');
+            $table->text('description');
+            $table->integer('priority')->default(0);
+            $table->integer('user_id')->nullable(false)->index('user_id');
+            $table->enum('status', ['complete', 'incomplete'])->default('incomplete');
+            $table->dateTime('datetime')->nullable(false)->index('datetime');
+            $table->boolean('is_deleted')->default(0);
         });
     }
 
