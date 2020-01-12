@@ -4,6 +4,8 @@
 namespace App\Http\Controllers;
 
 use App\Task;
+use App\Town;
+use App\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
@@ -43,7 +45,25 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
+        $attributes = $this->validate($request, [
+            'title' => ['required', 'max:255'],
+            'priority' => ['integer'],
+            'description' => ['max:1000'],
+            'user_id' => ['required', 'integer'],
+            'datetime' => ['required', 'date'],
+        ]);
 
+        $user = User::find($request->input('user_id'));
+        if (is_null($user)) {
+            return response()->json('Invalid user', 400);
+        }
+
+        /** @var Task $task */
+        $task = Task::create($attributes);
+
+        return ($task->save()) ?
+            $task :
+            response()->json('Bad request data', 400);
     }
 
     /**

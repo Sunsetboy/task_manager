@@ -19,6 +19,7 @@ use Faker\Generator as Faker;
 
 $factory->define(User::class, function (Faker $faker) {
     return [
+        'id' => $faker->randomNumber(8),
         'name' => $faker->name,
         'email' => $faker->email,
     ];
@@ -26,6 +27,7 @@ $factory->define(User::class, function (Faker $faker) {
 
 $factory->define(Task::class, function (Faker $faker) {
     return [
+        'id' => $faker->randomNumber(8),
         'title' => $faker->sentence,
         'description' => $faker->paragraph,
         'priority' => 10,
