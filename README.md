@@ -2,6 +2,7 @@
 * PHP 7.3
 * MariaDB 10.3
 * Nginx 1.17
+* Laravel Lumen framework
 
 ## Running
 First run:
@@ -22,6 +23,11 @@ composer install
 php artisan migrate
 php artisan db:seed
 ```
+## Application URL
+Application is available by URL ```localhost:81```
+
+## Postman collection
+Collection of routes for Postman is attached in the postman folder
 
 ## Stopping the application
 ```docker-compose down```
