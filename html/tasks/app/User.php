@@ -21,6 +21,15 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
      * @var array
      */
     protected $fillable = [
-        'name', 'email',
+        'name',
+        'email',
     ];
+
+    /**
+     * Get tasks of user
+     */
+    public function tasks()
+    {
+        return $this->hasMany('App\Task');
+    }
 }

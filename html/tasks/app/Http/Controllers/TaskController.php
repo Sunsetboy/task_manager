@@ -25,7 +25,7 @@ class TaskController extends Controller
      */
     public function getListForUser(Request $request, $id)
     {
-
+        // @todo add filtering by date, status, etc.
     }
 
     /**
@@ -36,6 +36,7 @@ class TaskController extends Controller
      */
     public function get(Request $request, $id)
     {
+        // @todo move fetching model into repository class
         $task = Task::find($id);
 
         if (is_null($task)) {
