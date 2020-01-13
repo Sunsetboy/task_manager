@@ -63,4 +63,34 @@ class TaskTest extends TestCase
         $this->json('GET', '/task/100023')
             ->seeStatusCode(404);
     }
+
+    /**
+     * @test
+     */
+    public function delete_a_non_existing_task()
+    {
+        $this->json('DELETE', '/task/10023')
+            ->seeStatusCode(404);
+    }
+
+    /**
+     * @test
+     */
+    public function delete_an_existing_task()
+    {
+        $user = factory('App\User')->create();
+        $task = factory('App\Task')->create(['user_id' => $user->id]);
+
+        $this->seeInDatabase('task', [
+            'id' => $task->id,
+            'is_deleted' => 0,
+        ]);
+
+        $this->json('DELETE', '/task/' . $task->id)
+            ->seeStatusCode(200);
+        $this->seeInDatabase('task', [
+            'id' => $task->id,
+            'is_deleted' => 1,
+        ]);
+    }
 }

@@ -89,6 +89,14 @@ class TaskController extends Controller
      */
     public function delete($id)
     {
+        $task = Task::find($id);
+        if (is_null($task)) {
+            return response()->json('Task not found', 404);
+        }
 
+        $task->is_deleted = 1;
+        $task->save();
+
+        return response()->json('Task is deleted', 200);
     }
 }
