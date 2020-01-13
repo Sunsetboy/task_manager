@@ -3,12 +3,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Repositories\TaskRepository;
 use App\Task;
 use App\Town;
 use App\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
+use Illuminate\Validation\Rule;
+use Illuminate\Validation\ValidationException;
 
 /**
  * Controller for tasks management
@@ -26,6 +29,15 @@ class TaskController extends Controller
     public function getListForUser(Request $request, $id)
     {
         // @todo add filtering by date, status, etc.
+        $user = User::find($id);
+        if (is_null($user)) {
+            return response()->json('Invalid user id', 400);
+        }
+
+        $tasksRepository = new TaskRepository();
+        $tasks = $tasksRepository->getTasksList($user, $request->all());
+
+        return $tasks;
     }
 
     /**
@@ -36,7 +48,6 @@ class TaskController extends Controller
      */
     public function get(Request $request, $id)
     {
-        // @todo move fetching model into repository class
         $task = Task::find($id);
 
         if (is_null($task)) {
@@ -77,10 +88,27 @@ class TaskController extends Controller
      * @param Request $request
      * @param integer $id
      * @return Task|JsonResponse
+     * @throws ValidationException
      */
     public function update(Request $request, $id)
     {
+        $task = Task::find($id);
 
+        if (is_null($task)) {
+            return response()->json('Task not found', 404);
+        }
+
+        $attributes = $this->validate($request, [
+            'title' => ['max:255'],
+            'priority' => ['integer'],
+            'description' => ['max:1000'],
+            'datetime' => ['date'],
+            'status' => [Rule::in(['complete', 'incomplete'])],
+        ]);
+
+        $task->fill($attributes)->save();
+
+        return $task;
     }
 
     /**

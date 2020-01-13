@@ -9,7 +9,7 @@ class Task extends Model
     protected $table = 'task';
     public $timestamps = false;
 
-    protected $guarded = ['id'];
+    protected $guarded = ['id', 'is_deleted'];
 
     /**
      * Get the owner of the task

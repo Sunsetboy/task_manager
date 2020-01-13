@@ -33,8 +33,7 @@ Collection of routes for Postman is attached in the postman folder
 ```docker-compose down```
 
 ## Tests execution
-All tests should be executed inside the tasks container
 
 ```
-vendor/bin/phpunit
+docker exec tasks vendor/bin/phpunit
 ```
