@@ -1,7 +1,9 @@
 <?php
 
+namespace Test\integration;
 
 use Laravel\Lumen\Testing\DatabaseMigrations;
+use Test\TestCase;
 
 class TaskTest extends TestCase
 {

@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "a17cf117-89f3-4957-b356-50a4e2f73ca4",
+		"_postman_id": "7a7ada7a-3365-4a10-b1a7-e7e177a520f9",
 		"name": "Tasks manager",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -8,10 +8,49 @@
 		{
 			"name": "Create a task",
 			"request": {
-				"method": "GET",
-				"header": [],
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "title",
+							"value": "My super task",
+							"type": "text"
+						},
+						{
+							"key": "priority",
+							"value": "10",
+							"type": "text"
+						},
+						{
+							"key": "user_id",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "datetime",
+							"value": "2020-02-01 10:00:00",
+							"type": "text"
+						}
+					]
+				},
 				"url": {
-					"raw": ""
+					"raw": "localhost:81/task",
+					"host": [
+						"localhost"
+					],
+					"port": "81",
+					"path": [
+						"task"
+					]
 				}
 			},
 			"response": []
@@ -22,7 +61,90 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": ""
+					"raw": "localhost:81/task/1",
+					"host": [
+						"localhost"
+					],
+					"port": "81",
+					"path": [
+						"task",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get tasks for user",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:81/task/user/1",
+					"host": [
+						"localhost"
+					],
+					"port": "81",
+					"path": [
+						"task",
+						"user",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update a task",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "title",
+							"value": "New name of old task",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:81/task/1",
+					"host": [
+						"localhost"
+					],
+					"port": "81",
+					"path": [
+						"task",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete a task",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:81/task/2",
+					"host": [
+						"localhost"
+					],
+					"port": "81",
+					"path": [
+						"task",
+						"2"
+					]
 				}
 			},
 			"response": []
